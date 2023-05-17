@@ -1,0 +1,18 @@
+Thread is a independent sequential path of execution within a program.
+
+Many threads can run concurrently withing  a program.
+
+At runtime, threads in a program exist in a common memory space and can, therefore share both data and 
+code,( i.e they are lightweight compared to processes).
+
+They also share the process running the program.
+
+3 Important concept related to multithreading in Java:
+
+1. Creating threads and providing the code that gets executed by a thread.
+2. Accessing common data and code through synchronisation.
+3. Transitioning between thread states.
+
+
+
+
