@@ -1,0 +1,39 @@
+A thread in Java is represented by an Object of the Thread Class.
+
+* Creating threads is achieved in one of two ways:
+1. Implementing the java.lang.Runnable.interface
+2. Extending the java.lang.Thread.class
+
+-> All custom user threads are spawned from Main thread. So Main thread act as its parent thread.
+Thread.start() just tells jvm to start running the thread whenever its free. JVM calls the run()
+function whenever it becomes free.
+
+-> If thread get started in thread1, then thread1 will act as parent of those.
+
+-> Only create demon thread, when it is like, they have no funtion of its oen, but it lives to serve
+the user thread. So when the user thread dies, demoen thread dies or it has no significance.
+
+class Thread implements Runable{
+    .....
+
+    private boolean daemon = false;
+}
+
+
+So there is a boolean daemon value which is already set to false in Thread class.
+
+Use thread.setDaemon(true) to make it daemon thread.
+
+If JVM finds that there is no user thread running, it might not allow demon thread to continue to run.
+
+
+
+
+Give a name to thread:
+
+1. Pass the name in constructor while creating object.
+2. Create a contructor in that thread class with a paramater ThreadName and pass this paramter to the 
+Thread class by super(ThreadName)
+
+3. To print the name of the thread, we call static method " Thread.currentThread()" to get 
+current running thread inside run function.
