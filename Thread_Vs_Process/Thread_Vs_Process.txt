@@ -1,0 +1,13 @@
+1. Two threads same the same address space.
+2. Conetxt switching etween threads is usually less expensive than betwen processes.
+3. The cost of communication between threads is relatively low.
+
+
+Why Multithreading???
+
+In a single threaded environment, Only one task at a time can be performed. 
+
+CPU cycles are wasted, for example, when waiting for user input.
+
+Multitasking allows idle CPU time to be put to good use.
+
