@@ -1,0 +1,38 @@
+In singleton design pattern, you can create only one object of a class. 
+
+We design the class in such a way that only one object is created.
+
+Now, we create a static variable of the instance and initially, we set it to NULL.
+
+When there is no object created , instance is NULL.
+
+We created a private construtor, becuse we dont want any other client to instantiate this 
+class from outside. Now what if any client want to instantiate the oject for this class.
+
+So for that we create static method. Now why do we need this construtor private? Why do we make static 
+method of getInstance. are covered.
+
+Basically, we dont expose our constructor, we expose getInstance method static method, 
+which basically checks that if instance is NULL, then no object have been created for this paricular class. In that case, we go ahead and we create an instance of this particular class.
+And before returning the instance, we store it instance variable.
+
+So next time , if others are trying to innstantiate by calling this getInstance method, what we do is 
+we just return already created instance. We dont create new instance.
+
+Why syncronised, why double check is already covered.
+
+This TvSetinstance is acting as a flag. 
+
+In multithreading environement , Lets say one thread create an obbject and update this instance.
+
+But that object is created in local cache, not in main memory.
+
+so other thread see in local cache that this tvinstance value is still NULL.
+
+This violates the singleton design pattern.
+
+That is why we want the flag instance "tvsetinstance" to get directly updated in main memory.
+instead of cache.
+
+That is why we declare it as volatile.
+
