@@ -68,4 +68,61 @@ This lock can be any object, except primitive types.
 Like ...    new Object(), new String("ss") .. Any object can act as lock here.
 
 
+Now, suppose there there three thread t1, t2, and t3 which are waiting for push method lock.
+
+And three thread t1(same), t4 and t5 , waiting for pop method lock.
+
+Suppose t2 took the lock and enter push method. 
+
+Now other thread who are even waiting for pop, cannot enter pop method which the lock is taken by t2 
+thread waiting which is in push method.. 
+
+So even if two methods are totally independent of each other, but share same lock. Then if a thread took
+that lock and is in one of the method. Other thread cannot enter any reamining methods.
+
+Lets say we use two different lock for push and pop, then one thread maybe t2 enters push with lock1. and
+other thread lets say t1 enters pop method with lock2.
+
+Does it solve our issue of stack???
+
+So do we want two different lock or a single lock for the Stack class???
+
+Having two different lock means two different thread can enters in push and pop respectively.
+but it also means that two thread are changing the state of class  at the same time, which 
+we dont want.
+
+
+We just want same lock in push and pop method for our stack problem.
+
+---> We can also make the whole method synchronised by adding keyword "synchronised" in the method signature 
+itself.
+
+And we dont need to pass any lock if adding synchroised keywordin method itself.  But we need to pass lock 
+when we are using syncrnised for a block.
+
+But the ques is ??
+
+What lock does it uses??
+
+Behind the scene , it uses the instance of current object as the lock, and put the whole code of method 
+in syncronised  block with this keyword as a lock.
+
+
+synchroised(this)
+{
+    //whole method body
+}
+
+for all the synchroised method in the class, the lock is the instance of this current class. Only one thread
+will be able to acccess all the synchroised methods. Becuse we used same lock "this" keyword in all methods.
+
+
+
+
+
+
+
+
+
+
 
