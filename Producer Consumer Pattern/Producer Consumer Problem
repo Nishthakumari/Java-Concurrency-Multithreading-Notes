@@ -1,0 +1,12 @@
+Lets say there is a queue. And there are different types of threads. Let me divide the threads into two groups.
+One group of thread is trying to push item in the the queue, Other group of thread is trying to
+remove items from the queue.
+
+So we can only push items, 
+We can only push item in the queue, if queue doesnot go out of capacity.
+We can only pop item from the queue, if there is any item.
+
+In multithreading environment, multiple item might be trying to pull out of the queue, and multiple thread might be trying to push in the queue.
+
+Make a class Blocking queue.
+
