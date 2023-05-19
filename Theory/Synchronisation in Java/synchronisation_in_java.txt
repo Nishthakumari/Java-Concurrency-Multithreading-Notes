@@ -119,6 +119,13 @@ will be able to acccess all the synchroised methods. Becuse we used same lock "t
 
 
 
+How do we synchroised static methods??
+We synchroised it using class lock. What is class lock??
+
+in case of static, Stack.class is used as lock in both synchroised block and synchroised in method signature.
+
+Like in singleton design pattern.
+
 
 
 
