@@ -1,0 +1,71 @@
+Synchronisation:
+Threads share the same memory i.e they can share resources(objects)
+However, there are critical situations when it  is desirable that only one thread at a time has acccess 
+to a shared resouce.
+
+Like Movie Ticket Booking, There is a field called RemainingSeat. MultipleThread are taking care of 
+multiple user to book seats in that cinema hall.
+
+If remainingSeat>0, book the seat and decreament the remaining seat by 1.
+
+Lets say remaining thread is 1 and 3 threads are trying to access this variable.
+
+Lets say 1st thread saw that reamining seat is 1 , so it went to book the seat which takes some time due to 
+some involvemnet of database call. In the mean time, 2nd thread also say that remaining seat is also 1 , thus
+it also went for booking. Thus available seat were 1, but two booking happened.
+
+Race condition.
+
+The shared resource in this case is "RemainingSeat" variable.
+
+
+Simulate a race condition using stack.
+
+Create  a stack having capacity 5.
+
+Create a thread which push 100 in stack 10 times.
+Create another thread which pop from stack 10 times.
+
+So there are two thread which are running parallely , one is trying to push 100. 10 times and other 
+is trying to pop 10 times from the same stack.
+
+We dont know exact sequence order in which these thread will run.
+
+When we try to run this program, we run into "ArrayIndexOutOfBoundException"
+
+Case: While pushing into the stack, we do stacktop++, so stack got increased, but then this thread went to sleep
+for a while, in the mean time other thread might have decreased staktop-- in pop method to make it negative, 
+thus when it comeback to push again, while stroing element , index stacktop mayhave become negative.
+So, stack[stackTop] =element will give error.
+
+So there might arise some cases when we cannot allow multiple thread to acess method at same time.
+
+In collection, we have some thread safe classes which exactly does the same thing.
+
+
+Push annd Pop are two method which are changing the state of the current object.
+isFull and isEmpty is not changing the state.
+
+We cant allow multiple thread to change the state at the same time. Becuse that will cause inconsistency.
+
+What can we do??
+
+We can provide a lock to the method, which allows only one thread to access that method, and untill it 
+completes its execution, other thread cannot enter that method/block.
+
+We can use lock or synchronised keyword.
+
+Here we will use syncronised keyword.
+
+synchroised{
+
+}
+
+Now, this synchronised keyword takes  a lock on th basis of which it aloows thread to eneter.
+
+This lock can be any object, except primitive types.
+
+Like ...    new Object(), new String("ss") .. Any object can act as lock here.
+
+
+
