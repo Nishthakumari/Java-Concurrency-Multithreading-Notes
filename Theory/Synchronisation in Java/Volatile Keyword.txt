@@ -1,0 +1,35 @@
+When do we need to use volatile keyword??
+
+Suppose we have two threads. 
+
+Thread1 ---> CPU ---> cache ---> RAM 
+Thread2 ----> CPU ----> cache ----> RAM
+ cache is used here for fast data access.
+
+ Whenever there is a shared variable (flag =T) that exist in RAM. Like the top of the stack which we saw earlier.
+
+So, there is a boolean shared variable , initially when is set to true.
+
+Both the thread read the value of this flag from their own cache, Now the problem is .
+
+Lets say thread2 changes the value of flag to false in its cache.
+
+Now, it wont directly update it in RAM, instead first it would update it in local chache.
+
+But other thread can still see value of flag as True, becuse its not updated in its local cache as well as 
+in main memory, it is still true.
+
+It will take some time to take RAM the updated value of flag as False. But Even if flag is updated in main RAM
+as false, still other thread have its value as true from their own chache.
+
+In order to get rid of this problem, we declare same variable as volatile,
+
+volatile boolean flag=true.
+
+Now what happens is , all the thread no longer read it from the local cache, rather it will read it from 
+RAM directly.
+
+So, incase thread2 changed the value of flag as False, Thread 1 will have access to the updated value.
+
+
+
