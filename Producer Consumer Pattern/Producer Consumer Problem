@@ -8,5 +8,98 @@ We can only pop item from the queue, if there is any item.
 
 In multithreading environment, multiple item might be trying to pull out of the queue, and multiple thread might be trying to push in the queue.
 
-Make a class Blocking queue.
+Make a class Blocking queue in intelliz.
+Here we cannot let multiple thread to change the state of the queue, that will make the state inconsistent.
+Therefore we have to put pop/push code in synchronised block.
+
+We are using same queue lock in both push and pop. So only 1 thread would be able to make exceute only one of the method, be it add or be it remove.
+
+Supoose a thread has entered in remove code, and assume that queue is empty. So thread has entered in remove code but it cannot execute the code becuse the queue is empty.. 
+Also other thread which can potentially add element to the queue, are also blocked becuse of same lock on all methods.
+
+So what should thread do which is in remove code???
+
+It should wait for a condition to be true.
+
+The condition is that whenever there is an item being added to the queue, then only I can unblock myself, 
+from wait state and I can again start executing.
+
+Obect class already have implemented wait(), notify(), notifyAll() method, Since this queue is also extending an object class, Therefore it will also have these methods.
+
+q.wait() says that I have to wait to be a condition to be true. This wait() throws an iterrupted exception.
+
+thread has to wait so that other thread gets chance to access this particular critical section. Thus thread will relase lock so other thread can come.
+
+Now how will it know that some element has come into queue?
+
+Someone need to notify that hey, I have put some particular item in the queue.
+
+So now please awake in and please start your exceution.
+
+Who will do that??
+
+Whichever thread is trying to add an item, that will do that.
+
+Whenever any thread add an item, it does notify all().
+
+
+NotifyAll() means notify all the thread, notify() means notify only that particular thread...
+here we are calling notifyall() becuse we are notifying all the threads which are in wait state.
+
+All those removal thread who were waiting for the queue to be full.
+
+When add thread call noitfyAll() method, then all waiting thread will awaken, and it can start execution from next line.
+
+Also, we will do same thing to adder as well, What can we do if capacity of queue is full????
+
+Adder thread will also have to wait.
+
+How long should adder thread wait?? It should wait till some thread have remove some item from the queue.
+
+And who will notify the adder thread that hey, some item have removed.
+
+Removal thread will do  it. so, when removal threads remove, it also calls the notifyAll method.
+
+
+
+There is a problem : 
+Suppose there comes a thread in add method, it sees that the queue is full, it goes in wait state and release lock(), so that other threads can remove item.  Now, there comes another adder thread , it also sees that the queue is full, and it also goes in the wait state.
+
+So, now there are two adder thead which are waiting in wait state in add method.
+
+Now suppose, remover thread remove one item from the queue.
+
+Now it notifyies all the thread that were in wait state. Now there are two thread adder1 and addder2 , and both got unblocked.
+Now it got notifed that now you are free to add item to the queue.
+
+Now both these two threads are fighting to get the lock.
+
+Lets say adder1 get the lock first. So, adder1 will start executing after this line.
+
+It will add item, it will notify other threads and it will return true, and it goes out of critical section.
+
+Now adder2 will start excetuing from next line. It also tries to add element to the queue. But hey, there is no space , now you can say that lets add one more condition that if q.size==capacity..... But what if there are 3 threads???
+
+So the best way to handle this is: Instead of using if, we will use while loop. By doing this, ourproblem will be solved. Why??
+
+
+When thread go in wait state, it realeases lock and when it is awaken, it again has to fight for the lock.
+
+So, for first adder thread , it checks while loop which failing ,so , it come out of while loop, add an item to the queue and return true. Now, thread was also awaken, but it would not directly try to add item, rather it will go to while condition and check that first. But this time while condition is true as queue is full. So adder2 thread have to go in wait state again.
+
+So, instead of if, it very important to use while ....
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
